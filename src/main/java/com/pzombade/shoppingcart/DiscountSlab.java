@@ -1,6 +1,8 @@
 package com.pzombade.shoppingcart;
 
-public class DiscountRange {
+import java.util.Objects;
+
+public class DiscountSlab {
 
     private long min;
     private long max;
@@ -16,12 +18,29 @@ public class DiscountRange {
 
     private boolean isLastSlab = false;
 
-    public DiscountRange(){}
+    public DiscountSlab(){}
 
-    public DiscountRange(long min, long max, long discountPercentage) {
+    public DiscountSlab(long min, long max, long discountPercentage, boolean isLastSlab) {
         this.min = min;
         this.max = max;
+        this.isLastSlab = isLastSlab;
         this.discountPercentage = discountPercentage;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DiscountSlab that = (DiscountSlab) o;
+        return min == that.min &&
+                max == that.max &&
+                discountPercentage == that.discountPercentage &&
+                isLastSlab == that.isLastSlab;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(min, max, discountPercentage, isLastSlab);
     }
 
     @Override
@@ -30,6 +49,7 @@ public class DiscountRange {
                 "min=" + min +
                 ", max=" + max +
                 ", discountPercentage=" + discountPercentage +
+                ", isLastSlab=" + isLastSlab +
                 '}';
     }
 

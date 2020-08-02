@@ -10,11 +10,15 @@ import java.util.Set;
 
 public class CalculatorUtil{
 
-    private static Map<String,ArrayList<DiscountRange>> discountMap = new HashMap<>();
+    private static Map<String,ArrayList<DiscountSlab>> discountMap = new HashMap<>();
     public static long getTotalDiscount(String type, long billAmount) {
         //type = "@"+type;
+        if(!type.startsWith("@")){
+            type = "@" + type;
+        }
+
         long tempAmount = billAmount;
-        ArrayList<DiscountRange> list = discountMap.get(type);
+        ArrayList<DiscountSlab> list = discountMap.get(type);
         long dis =0;
 
         if(!isApplicableForDiscount(billAmount,list.get(0))){
@@ -24,7 +28,7 @@ public class CalculatorUtil{
         boolean terminateLoop = false;
 
         for (int i = 0; i < list.size() && !terminateLoop; i++) {
-            DiscountRange range = list.get(i);
+            DiscountSlab range = list.get(i);
             long discountPercent = range.getDiscountPercentage();
             boolean isBelowMax = billAmount > range.getMin() && billAmount <= range.getMax();
 
@@ -57,7 +61,7 @@ public class CalculatorUtil{
                  //   System.out.println(line);
                     if(line.startsWith("@")){
                         customerType = line;
-                        discountMap.put(customerType, new ArrayList<DiscountRange>());
+                        discountMap.put(customerType, new ArrayList<DiscountSlab>());
                     }else{
                         discountMap.get(customerType).add(parseRow(line));
                     }
@@ -69,12 +73,12 @@ public class CalculatorUtil{
       //  System.out.println("discountMap :: " + discountMap);
     }
 
-    private static DiscountRange parseRow(String line) {
+    public static DiscountSlab parseRow(String line) {
         String[] arr = line.split(":");
         int min = Integer.parseInt(arr[0]);
         int max = Integer.parseInt(arr[1]);
 
-        DiscountRange range = range = new DiscountRange();
+        DiscountSlab range = range = new DiscountSlab();
         range.setMin(min);
 
         if(arr.length==2){
@@ -98,8 +102,8 @@ public class CalculatorUtil{
         return tobePaid;
     }
 
-    private static boolean isApplicableForDiscount(long billAmount, DiscountRange discountRange) {
-        boolean applicable =  billAmount >= discountRange.getMax();
+    private static boolean isApplicableForDiscount(long billAmount, DiscountSlab discountSlab) {
+        boolean applicable =  billAmount >= discountSlab.getMax();
         // System.out.println("Is applicable for discount " + applicable);
         return applicable;
     }
