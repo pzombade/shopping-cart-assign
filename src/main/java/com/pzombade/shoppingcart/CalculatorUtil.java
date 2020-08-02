@@ -6,12 +6,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class CalculatorUtil{
 
     private static Map<String,ArrayList<DiscountRange>> discountMap = new HashMap<>();
     public static long getTotalDiscount(String type, long billAmount) {
-        type = "@"+type;
+        //type = "@"+type;
         long tempAmount = billAmount;
         ArrayList<DiscountRange> list = discountMap.get(type);
         long dis =0;
@@ -35,6 +36,14 @@ public class CalculatorUtil{
             }
         }
         return  dis;
+    }
+
+    public static boolean isValidUserType(String type){
+        return discountMap.containsKey(type);
+    }
+
+    public static Set<String> getUserTypes(){
+        return discountMap.keySet();
     }
 
     public static void loadDiscounts(String discountFilePath) throws IOException {
@@ -80,7 +89,7 @@ public class CalculatorUtil{
         return range;
     }
 
-    public static long getTotalAmount(String type, long billAmount) {
+    public static long calculateTotalAmount(String type, long billAmount) {
         System.out.println(type+" + Bill Amount " + billAmount);
         long discount = getTotalDiscount(type,billAmount);
         System.out.println("Discount " + discount);
