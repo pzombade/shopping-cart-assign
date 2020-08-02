@@ -31,4 +31,8 @@ $ Plase enter customer type
 $ Regular
 $ Plase enter billing amount
 $ 15000
-
+$ 
+$ @Regular + Bill Amount 15000
+$ Discount 1500
+$ Discounted Bill amount 13500
+```
