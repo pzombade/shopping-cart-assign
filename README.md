@@ -1,12 +1,14 @@
 # shopping-cart-assign
+-------------------------------------------
+A simple java-springboot cli application that calculates discount on a total bill.
 
-# to build the project
+#### To build the project
 mvn clean package
 
-# to run the project
+#### To run the project
 target/shopping-cart-0.0.1-SNAPSHOT.jar /root/absolute/path/of/regular-customer.txt
 
-# On windows
+#### On windows
 C:\projects\other\assignment\Sincro\shopping-cart\target>java -jar shopping-cart-0.0.1-SNAPSHOT.jar C:\tmp\regular-customer.txt
 
 
